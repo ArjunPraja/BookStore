@@ -1,40 +1,50 @@
 const mongoose = require('mongoose');
+const Joi = require('joi');
+const { v4: uuidv4 } = require('uuid');
 
 const reviewSchema = new mongoose.Schema({
-    
-  userId: { 
-    type: mongoose.Schema.Types.ObjectId, 
-    ref: 'User', 
-    required: true 
+    uuid: {
+        type: String,
+        default: uuidv4,
+        unique: true
     },
-
-  bookId: { 
-    type: mongoose.Schema.Types.ObjectId, 
-    ref: 'Book', 
-    required: true 
+    userId: {
+        type: String,
+        required: true
     },
-
-  rating: { 
-    type: Number, 
-    required: true, 
-    min: 1, 
-    max: 5 },
-
-  comment: { 
-    type: String 
+    bookId: {
+        type: String,
+        required: true
     },
-
-  createdAt: { 
-    type: Date, 
-    default: Date.now 
+    rating: {
+        type: Number,
+        min: 1,
+        max: 5,
+        required: true
     },
-
-  updatedAt: { 
-    type: Date, 
-    default: Date.now 
-}
-
-
+    comment: {
+        type: String,
+        required: true
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now
+    }
 });
 
-module.exports = mongoose.model('Review', reviewSchema);
+const Review = mongoose.model('Review', reviewSchema);
+
+const validateReview = (review) => {
+    const schema = Joi.object({
+        bookId: Joi.string().uuid().required(),
+        rating: Joi.number().min(1).max(5).required(),
+        comment: Joi.string().required()
+    });
+
+    return schema.validate(review);
+};
+
+module.exports = {
+    Review,
+    validateReview
+};

@@ -16,6 +16,9 @@ app.use(cors({
 app.use(express.json());
 app.use(cookieParser());
 
+
+const cartRoutes = require('./routes/cartRoutes');
+
 // Routes
 app.get('/', (req, res) => {
     res.json({
