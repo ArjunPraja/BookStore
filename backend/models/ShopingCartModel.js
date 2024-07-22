@@ -1,38 +1,38 @@
 const mongoose = require('mongoose');
+const { v4: uuidv4 } = require('uuid');
 
 const cartItemSchema = new mongoose.Schema({
-  bookId: { 
-    type: mongoose.Schema.Types.ObjectId, 
-    ref: 'Book', 
-    required: true 
-},
-  quantity: { 
-    type: Number, 
-    required: true 
-},
-  price: { 
-    type: Number, 
-    required: true 
-}
+  bookUuid: {
+    type: String,
+    required: true
+  },
+  title: { type: String, required: true },
+  coverImage: { type: String, required: true },
+  quantity: {
+    type: Number,
+    required: true,
+    min: 1
+  },
+  price: {
+    type: Number,
+    required: true,
+    min: 0
+  }
 });
 
 const shoppingCartSchema = new mongoose.Schema({
-  userId: { 
-    type: mongoose.Schema.Types.ObjectId, 
-    ref: 'User', 
-    required: true 
-},
-  cartItems: [cartItemSchema],
-
-  createdAt: { 
-    type: Date, 
-    default: Date.now 
-},
-  updatedAt: { 
-    type: Date, 
-    default: Date.now 
-}
-
+  uuid: {
+    type: String,
+    default: uuidv4,
+    unique: true
+  },
+  userUuid: {
+    type: String,
+    required: true
+  },
+  cartItems: [cartItemSchema]
+}, {
+  timestamps: true
 });
 
 module.exports = mongoose.model('ShoppingCart', shoppingCartSchema);
