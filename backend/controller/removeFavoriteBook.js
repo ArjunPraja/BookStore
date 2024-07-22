@@ -2,7 +2,13 @@ const FavoriteBook = require('../models/FavoriteModel');
 const getUserDetailsFromToken = require('../helper/getUserDetailsFromToken');
 
 const removeFavoriteBook = async (req, res) => {
-    const token = req.cookies.token;
+    const authHeader = req.headers.authorization;
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      return res.status(401).json({ message: 'No token provided', error: true });
+    }
+
+    const token = authHeader.split(' ')[1];
+    console.log(token)
     const userDetails = await getUserDetailsFromToken(token);
 
     if (userDetails.error || userDetails.logout) {

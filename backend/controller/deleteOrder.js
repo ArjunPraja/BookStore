@@ -8,11 +8,13 @@ const deleteOrderItemByBookUuid = async (req, res) => {
   const { bookUuid } = req.params;
 
   try {
-    const token = req.cookies.token;
-    if (!token) {
+    const authHeader = req.headers.authorization;
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
       return res.status(401).json({ message: 'No token provided', error: true });
     }
 
+    const token = authHeader.split(' ')[1];
+    console.log(token)
     const decoded = jwt.verify(token, JWT_SECRET_KEY);
     const userUuid = decoded.id;
 

@@ -3,7 +3,13 @@ const getUserDetailsFromToken = require('../helper/getUserDetailsFromToken');
 const Book = require('../models/BookModel'); // Assuming there is a Book model to fetch book details
 
 const getFavoriteBooks = async (req, res) => {
-    const token = req.cookies.token;
+    const authHeader = req.headers.authorization;
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      return res.status(401).json({ message: 'No token provided', error: true });
+    }
+
+    const token = authHeader.split(' ')[1];
+    console.log(token)
     
     // Check for user details from the token
     const userDetails = await getUserDetailsFromToken(token);

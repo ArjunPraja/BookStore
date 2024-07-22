@@ -5,11 +5,14 @@ require('dotenv').config();
 const JWT_SECRET_KEY = process.env.JWT_SECREAT_KEY;
 
 const getAllReviews = async (req, res) => {
-    // Get the JWT token from cookies
-    const token = req.cookies.token;
-    if (!token) {
-        return res.status(401).json({ message: 'No token provided', error: true });
+
+    const authHeader = req.headers.authorization;
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      return res.status(401).json({ message: 'No token provided', error: true });
     }
+
+    const token = authHeader.split(' ')[1];
+   
 
     // Decode the token to get userUuid
     let userUuid;
