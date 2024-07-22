@@ -649,7 +649,6 @@ const Cart = () => {
       <Header1 />
       <div className="max-w-screen-xl mx-auto py-10 px-4 sm:px-6 lg:px-8">
         <h1 className="text-3xl font-semibold text-center mb-8">Your Cart</h1>
-        {console.log(cartItems)}
         {cartItems.length > 0 ? (
           <>
             <div className="grid gap-8">

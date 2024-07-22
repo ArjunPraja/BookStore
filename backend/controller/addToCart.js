@@ -26,12 +26,10 @@ const addToCart = async (req, res) => {
     const token = authHeader.split(' ')[1];
     const decoded = jwt.verify(token, JWT_SECRET_KEY);
     const userUuid = decoded.id;
-    console.log(userUuid)
-    const { bookUuid, quantity } = req.body;
+     const { bookUuid, quantity } = req.body;
     const book = await BookModel.findOne({ uuid: bookUuid });
     
-    console.log(book)
-    if (!book) {
+     if (!book) {
       return res.status(404).json({ message: 'Book not found', error: true });
     }
 
