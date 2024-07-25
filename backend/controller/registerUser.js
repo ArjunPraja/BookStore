@@ -4,9 +4,6 @@ const Joi = require('joi');
 
 const registerUser = async (req, res) => {
     const schema = Joi.object({
-        username: Joi.string().trim().required().messages({
-            'string.empty': 'Username is required.'
-        }),
         email: Joi.string().email().required().messages({
             'string.email': 'Email is not valid.'
         }),
@@ -33,8 +30,11 @@ const registerUser = async (req, res) => {
     }
 
     try {
-        const { username, email, password, name, contactNo, age, city, state, country } = req.body;
-        // console.log(username, email, password, name, contactNo, age, city, state, country);
+        const { email, password, name, contactNo, age, city, state, country } = req.body;
+
+        // Extract username from email
+        const username = email.split('@')[0];
+
         let user = await UserModel.findOne({ email });
 
         if (user) {
@@ -44,7 +44,6 @@ const registerUser = async (req, res) => {
                 return res.status(200).json({
                     message: "User activated successfully",
                     data: user,
-                    
                     success: true
                 });
             } else {
@@ -88,3 +87,4 @@ const registerUser = async (req, res) => {
 };
 
 module.exports = registerUser;
+        

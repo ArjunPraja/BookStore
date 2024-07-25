@@ -5,7 +5,7 @@ require('dotenv').config();
 const JWT_SECRET_KEY = process.env.JWT_SECREAT_KEY;
 
 const getOrderById = async (req, res) => {
-  const { bookUuid } = req.params;
+  
 
   try {
     const authHeader = req.headers.authorization;
@@ -16,13 +16,15 @@ const getOrderById = async (req, res) => {
     const token = authHeader.split(' ')[1];
     console.log(token)
 
+    // const token = req.cookies.token;
+
     const decoded = jwt.verify(token, JWT_SECRET_KEY);
     const userUuid = decoded.id;
 
-    const order = await Order.findOne({ userUuid, 'orderItems.bookUuid': bookUuid });
+    const order = await Order.find({ userUuid:userUuid});
     if (!order) return res.status(404).json({ message: 'Order not found', error: true });
 
-    res.status(200).json({ order, userUuid });
+    res.status(200).json({ order});
   } catch (error) {
     res.status(500).json({ message: 'An error occurred while retrieving the order', error });
   }

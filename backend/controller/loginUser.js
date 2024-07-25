@@ -47,6 +47,9 @@ const loginUser = async (req, res) => {
         }
 
         const user = await UserModel.findOne({ email });
+        
+        user.status=true
+        await user.save();
         if (user) {
             const isMatch = await bcryptjs.compare(password, user.password);
             if (!isMatch) {

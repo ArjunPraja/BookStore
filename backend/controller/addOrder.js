@@ -8,14 +8,16 @@ const JWT_SECRET_KEY = process.env.JWT_SECREAT_KEY;
 const addOrder = async (req, res) => {
    
   try {
-    // Get the token from the Authorization header
-    const authHeader = req.headers.authorization;
-    if (!authHeader || !authHeader.startsWith('Bearer ')) {
-      return res.status(401).json({ message: 'No token provided', error: true });
-    }
+    // // Get the token from the Authorization header
+    // const authHeader = req.headers.authorization;
+    // if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    //   return res.status(401).json({ message: 'No token provided', error: true });
+    // }
 
-    const token = authHeader.split(' ')[1];
-    console.log(token)
+    // const token = authHeader.split(' ')[1];
+    // console.log(token)
+    const token=req.cookies.token;
+    
     // Verify the token and extract user UUID
     const decoded = jwt.verify(token, JWT_SECRET_KEY);
     const userUuid = decoded.id;

@@ -47,6 +47,7 @@ const deleteOrderItemByBookUuid = require('../controller/deleteOrder');
 const addReview = require('../controller/addReviews');
 const getAllReviews = require('../controller/getAllReviews');
 const deleteReview = require('../controller/deleteReviews');
+const { addContactUs,getAllContacts } = require('../controller/ContactUs');
  
 
 const router = express.Router();
@@ -69,12 +70,16 @@ router.delete('/review/deletereview/:id', deleteReview);
 
 router.post('/addorder',addOrder);
 router.get('/getorders',getAllOrders);
-router.get('/getorder/:bookUuid', getOrderById);
+router.get('/getorderbyid', getOrderById);
 router.delete('/deleteorder/:bookUuid', deleteOrderItemByBookUuid);
 
 router.post('/addfavouritebook', addFavoriteBook);
 router.get('/viewfavouritebook', getFavoriteBooks);
 router.delete('/removefavouritebook/:bookUuid', removeFavoriteBook);
 
+
+
+router.post('/addcontact',addContactUs)
+router.get('/getcontact',getAllContacts)
 
 module.exports = router;

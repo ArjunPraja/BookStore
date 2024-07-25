@@ -18,12 +18,14 @@ const addToCart = async (req, res) => {
   }
 
   try {
-    const authHeader = req.headers.authorization;
-    if (!authHeader) {
-      return res.status(401).json({ message: 'No token provided', error: true });
-    }
+    // const authHeader = req.headers.authorization;
+    // if (!authHeader) {
+    //   return res.status(401).json({ message: 'No token provided', error: true });
+    // }
 
-    const token = authHeader.split(' ')[1];
+    // const token = authHeader.split(' ')[1];
+    const token = req.cookies.token;
+    
     const decoded = jwt.verify(token, JWT_SECRET_KEY);
     const userUuid = decoded.id;
      const { bookUuid, quantity } = req.body;
