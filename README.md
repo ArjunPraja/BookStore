@@ -30,8 +30,8 @@ Welcome to the Bookstore Management Web Application Service Based Project! This 
 
 1. **Clone the Repository**:
    ```bash
-   git clone https://github.com/trana261003/bookStore.git
-   cd bookstore-management
+   git clone https://github.com/ArjunPraja/BookStore.git
+   cd BookStore
    ```
 
 2. **Backend Setup**:
