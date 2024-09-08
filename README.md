@@ -125,7 +125,4 @@ We welcome contributions to enhance the project. Please follow these steps to co
 
 7. **Create a Pull Request**:
    Go to the original repository on GitHub and create a pull request to merge your changes.
-
-## License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+ 
